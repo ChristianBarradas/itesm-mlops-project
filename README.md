@@ -126,28 +126,150 @@ Uvicorn is a lightning-fast ASGI (Asynchronous Server Gateway Interface) server 
         Request body
 
         ```bash
-    {
-        "bedrooms": 1,
-        "bathrooms": 2,
-        "sqft_living": 0,
-        "sqft_lot": 0,
-        "floors": 0,
-        "waterfront": 0,
-        "view": 0,
-        "condition": 0,
-        "grade": 0,
-        "sqft_above": 0,
-        "sqft_basement": 0,
-        "yr_built": 0,
-        "yr_renovated": 0,
-        "lat": 0,
-        "long": 0,
-        "sqft_living15": 0,
-        "sqft_lot15": 0,
-        "month": 0,
-        "year": 0
-    }
+        {
+            "bedrooms": 1,
+            "bathrooms": 2,
+            "sqft_living": 0,
+            "sqft_lot": 0,
+            "floors": 0,
+            "waterfront": 0,
+            "view": 0,
+            "condition": 0,
+            "grade": 0,
+            "sqft_above": 0,
+            "sqft_basement": 0,
+            "yr_built": 0,
+            "yr_renovated": 0,
+            "lat": 0,
+            "long": 0,
+            "sqft_living15": 0,
+            "sqft_lot15": 0,
+            "month": 0,
+            "year": 0
+        }
 
+        ```
+
+        Response body
+        The output will be:
+
+        ```bash
+        "Resultado predicción: [90957.64]"
+        ```
+
+    * **Prediction 2**  
+        Request body
+
+        ```bash
+         {
+            "bedrooms": 1,
+            "bathrooms": 0,
+            "sqft_living": 0,
+            "sqft_lot": 0,
+            "floors": 0,
+            "waterfront": 0,
+            "view": 0,
+            "condition": 0,
+            "grade": 0,
+            "sqft_above": 0,
+            "sqft_basement": 0,
+            "yr_built": 0,
+            "yr_renovated": 0,
+            "lat": 0,
+            "long": 0,
+            "sqft_living15": 0,
+            "sqft_lot15": 0,
+            "month": 0,
+            "year": 0
+        }
+        ```
+
+        Response body
+        The output will be:
+
+        ```bash
+        "Resultado predicción: [73491.516]"
+        ```
+
+
+### Individual deployment of the API with Docker and usage
+
+#### Build the image
+
+* Ensure you are in the `itesm-mlops-project/` directory (root folder).
+* Run the following code to build the image:
+
+    ```bash
+    docker build -t house-image ./itesm_mlops_project/app/
+    ```
+
+* Inspect the image created by running this command:
+
+    ```bash
+    docker images
+    ```
+
+    Output:
+
+    ```bash
+    REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
+    house-image   latest    40045c4fb776   4 minutes ago   2.24GB
+    ```
+
+#### Run House Predict Price REST API
+
+1. Run the next command to start the `house-image` image in a container.
+
+    ```bash
+    docker run -d --name house-container -p 8000:8000 house-image
+    ```
+
+2. Check the container running.
+
+    ```bash
+    docker ps -a
+    ```
+
+    Output:
+
+    ```bash
+    CONTAINER ID   IMAGE          COMMAND                  CREATED       STATUS       PORTS                    NAMES
+    a5ed9e2af11c   463a87774a45   "uvicorn main:app --…"   4 hours ago   Up 4 hours   0.0.0.0:8000->8000/tcp   house-container
+    ```
+
+#### Checking endpoints for app
+
+1. Access `http://127.0.0.1:8000/`, and you will see a message like this `"House predict price is all ready to go!"`
+2. A file called `main.log` will be created automatically inside the container. We will inspect it below.
+3. Access `http://127.0.0.1:8000/docs`, the browser will display something like this:
+    ![FastAPI Docs](docs/imgs/fast-api-docs.png)
+
+4. Try running the following predictions with the endpoint by writing the following values:
+    * **Prediction 1**  
+        Request body
+
+        ```bash
+        {
+            "bedrooms": 1,
+            "bathrooms": 1,
+            "sqft_living": 1,
+            "sqft_lot": 0,
+            "floors": 0,
+            "waterfront": 0,
+            "view": 0,
+            "condition": 0,
+            "grade": 0,
+            "sqft_above": 0,
+            "sqft_basement": 0,
+            "yr_built": 0,
+            "yr_renovated": 0,
+            "lat": 0,
+            "long": 0,
+            "sqft_living15": 0,
+            "sqft_lot15": 0,
+            "month": 0,
+            "year": 0
+        }
         ```
 
         Response body
@@ -157,24 +279,32 @@ Uvicorn is a lightning-fast ASGI (Asynchronous Server Gateway Interface) server 
         "Resultado predicción: [0]"
         ```
 
+        ![Prediction 1](docs/imgs/prediction-1.png)
+
     * **Prediction 2**  
         Request body
 
         ```bash
          {
-            "pclass_nan": 0,
-            "age_nan": 0,
-            "sibsp_nan": 1,
-            "parch_nan": 0,
-            "fare_nan": 0,
-            "sex_male": 0,
-            "cabin_Missing": 0,
-            "cabin_rare": 0,
-            "embarked_Q": 1,
-            "embarked_S": 0,
-            "title_Mr": 1,
-            "title_Mrs": 0,
-            "title_rar": 0
+            "bedrooms": 2,
+            "bathrooms": 2,
+            "sqft_living": 2,
+            "sqft_lot": 0,
+            "floors": 0,
+            "waterfront": 0,
+            "view": 0,
+            "condition": 0,
+            "grade": 0,
+            "sqft_above": 0,
+            "sqft_basement": 0,
+            "yr_built": 0,
+            "yr_renovated": 0,
+            "lat": 0,
+            "long": 0,
+            "sqft_living15": 0,
+            "sqft_lot15": 0,
+            "month": 0,
+            "year": 0
         }
         ```
 
@@ -184,3 +314,5 @@ Uvicorn is a lightning-fast ASGI (Asynchronous Server Gateway Interface) server 
         ```bash
         "Resultado predicción: [1]"
         ```
+
+        ![Prediction 2](docs/imgs/prediction-2.png)
