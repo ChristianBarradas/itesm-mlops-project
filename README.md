@@ -316,3 +316,202 @@ Uvicorn is a lightning-fast ASGI (Asynchronous Server Gateway Interface) server 
         ```
 
         ![Prediction 2](docs/imgs/prediction-2.png)
+
+#### Opening the logs
+
+1. Run the command
+
+    ```bash
+    docker exec -it house-container bash
+    ```
+
+    Output:
+
+    ```bash
+    root@53d78fb5223f:/# 
+    ```
+
+2. Check the existing files:
+
+    ```bash
+    ls
+    ```
+
+    Output:
+
+    ```bash
+    Dockerfile   bin   etc   main.py       ml_models  opt        requirements.txt  sbin  tmp README.md    boot  home  main_api.log  mnt    predictor  root   srv   usr __pycache__  dev   lib   media         models     proc       run     sys   var
+    ```
+
+3. Open the file `main.log` and inspect the logs with this command:
+
+    ```bash
+    vim main_api.log
+    ```
+
+    Output:
+
+    ```log
+    2023-08-23 14:00:08,411:main:main:DEBUG:start API
+    2023-08-23 14:00:08,411:main:main:INFO:initialize FAST API
+    2023-08-23 14:00:17,440:main:main:INFO:house predict is all ready to go!
+    2023-08-23 14:00:21,040:main:main:INFO:Input Values: [[1.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]]
+
+    ```
+
+4. Copy the logs to the root folder:
+
+    ```bash
+    docker cp house-container:/main.log .
+    ```
+
+    Output:
+
+    ```bash
+    Successfully copied 1.85kB to .../itesm-mlops-project/.
+    ```
+
+#### Delete container and image
+
+* Stop the container:
+
+    ```bash
+    docker stop house-container
+    ```
+
+* Verify it was deleted
+
+    ```bash
+    docker ps -a
+    ```
+
+    Output:
+
+    ```bash
+    CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+    ```
+
+* Delete the image
+
+    ```bash
+    docker rmi house-image
+    ```
+
+    Output:
+
+    ```bash
+    Deleted: sha256:bb48551cf5423bad83617ad54a8194501aebbc8f3ebb767de62862100d4e7fd2
+    ```
+
+### Complete deployment of all containers with Docker Compose and usage
+
+#### Create the network
+
+First, create the network AIService by running this command:
+
+```bash
+docker network create AIservice
+```
+
+#### Run Docker Compose
+
+* Ensure you are in the directory where the docker-compose.yml file is located
+
+* Run the next command to start the App and Frontend APIs
+
+    ```bash
+    docker-compose -f itesm_mlops_project/docker-compose.yml up --build
+    ```
+
+    You will see something like this:
+
+    (docs/imgs/start_DC.png)
+
+#### Checking endpoints in Frontend
+
+1. Access `http://127.0.0.1:3000/`, and you will see a message like this `"Front-end is all ready to go!"`
+2. A file called `frontend.log` will be created automatically inside the container. We will inspect it below.
+3. Access `http://127.0.0.1:3000/docs`, the browser will display something like this:
+    ![Frontend Docs](docs/imgs/frontend-1.png)
+
+
+
+#### Opening the logs in Frontend
+
+Open a new terminal, and execute the following commands:
+
+1. Copy the `frontend` logs to the root folder:
+
+    ```bash
+    docker cp itesm_mlops_project-frontend-1:/frontend.log .
+    ```
+
+    Output:
+
+    ```bash
+    Successfully copied 3.12kB to .../itesm-mlops-project/.
+    ```
+
+2. You can inspect the logs and see something similar to this:
+
+    ```bash
+    INFO: 2023-08-21 23:42:00,057|main|Front-end is all ready to go!
+    DEBUG: 2023-08-21 23:45:43,742|main|Prediction: "Resultado predicción: [0]"
+    DEBUG: 2023-08-21 23:46:47,038|main|Prediction: "Resultado predicción: [1]"
+    ```
+
+#### Opening the logs in App
+
+Open a new terminal, and execute the following commands:
+
+1. Copy the `app` logs to the root folder:
+
+    ```bash
+    docker cp itesm_mlops_project-app-1:/main.log .
+    ```
+
+    Output:
+
+    ```bash
+    Successfully copied 2.56kB to .../itesm-mlops-project/.
+    ```
+
+2. You can inspect the logs and see something similar to this:
+
+    ```bash
+    2023-08-23 14:00:08,411:main:main:INFO:initialize FAST API
+    2023-08-23 14:00:17,440:main:main:INFO:house predict is all ready to go!
+    2023-08-23 14:00:21,040:main:main:INFO:Input Values: [[1.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]]
+    2023-08-23 14:00:21,223:main:main:INFO:Prediction Result: [[90957.64]]
+    ```
+
+### Delete the containers with Docker Compose
+
+1. Stop the containers that have previously been launched with `docker-compose up`.
+
+    ```bash
+    docker-compose -f itesm_mlops_project/docker-compose.yml stop 
+    ```
+
+    Output:
+
+    ```bash
+    [+] Stopping 2/2
+    ✔ Container itesm_mlops_project-frontend-1  Stopped                           0.3s 
+    ✔ Container itesm_mlops_project-app-1       Stopped                           0.4s 
+    ```
+
+2. Delete the containers stopped from the stage.
+
+    ```bash
+    docker-compose -f itesm_mlops_project/docker-compose.yml rm
+    ```
+
+    Output:
+
+    ```bash
+    ? Going to remove itesm_mlops_project-frontend-1, itesm_mlops_project-app-1 Yes
+    [+] Removing 2/0
+    ✔ Container itesm_mlops_project-app-1       Removed                           0.0s 
+    ✔ Container itesm_mlops_project-frontend-1  Removed                           0.0s 
+    ```
