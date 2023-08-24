@@ -5,7 +5,11 @@ from sklearn.preprocessing import MinMaxScaler
 # creating a model
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
+from custom_loggin import CustomLogger
 
+FILE_LOG_DIR = 'train/train_data.log'
+logger = CustomLogger(__name__, FILE_LOG_DIR).logger    
+logger.info("drop columns")
 COLUMNS_TO_DROP = ['id', 'zipcode', 'date']
 
 class HousingDataPipeline:
@@ -81,9 +85,11 @@ class HousingDataPipeline:
         pipeline = self.create_pipeline()
         return pipeline.transform(X_test)
 
-
+logger.info("CustomTransformer")
 class CustomTransformer(BaseEstimator, TransformerMixin):
     #the constructor
+    logger.info("CustomTransformer")
+    logger.debug("add columns")
     '''setting the add_bedrooms_per_room to True helps us check if the hyperparameter is useful'''
     def __init__(self, add_bedrooms_per_room = True):
         self.add_bedrooms_per_room = add_bedrooms_per_room

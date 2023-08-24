@@ -1,7 +1,11 @@
 import pandas as pd
+from custom_loggin import CustomLogger
 
-
+FILE_LOG_DIR = 'load/load_data.log'
+logger = CustomLogger(__name__, FILE_LOG_DIR).logger    
+logger.info("load data")
 class DataRetriever:
+    logger.info("DataRetriever")
     """
     A class for retrieving data from a given URL and processing it for further analysis.
 
@@ -22,7 +26,9 @@ class DataRetriever:
     ```
     """
     DROP_COLS = ['id', 'zipcode', 'date']
-    RETRIEVED_DATA = '/Users/SISTEMAS/MLOPs_Project/DataSet/kc_house_data.csv'  # File name for the retrieved data.
+    RETRIEVED_DATA = '/data/kc_house_data.csv'  # File name for the retrieved data.
+    logger.info(f"drop columns:{[DROP_COLS]}")
+    
 
     def __init__(self, url, data_path):
         self.url = url
