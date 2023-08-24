@@ -37,3 +37,71 @@ This project is planned to cover the topics seen in the course syllabus, which w
 
 In other words, knowledge is integrated regarding the learning of good software development practices and Dev Ops (Continuous Integration) applied to the deployment of ML models.
 
+### Links to experiments like notebooks
+
+You can find the Titanic experiments here:
+
+* [1-exploring-data.ipynb](docs/notebooks/1-exploring-data.ipynb)
+* [2-organizing-ideas.ipynb](docs/notebooks/2-organizing-ideas.ipynb)
+* [3-create-convenient-classes.ipynb](docs/notebooks/3-create-convenient-classes.ipynb)
+* [4_creating_pipeline.ipynb](docs/notebooks/4_creating_pipeline.ipynb)
+* [5_refactored_titanic_notebook.ipynb](docs/notebooks/5_refactored_titanic_notebook.ipynb)
+
+## Setup
+
+### Python version and packages to install
+
+* Change the directory to the root folder.
+
+* Create a virtual environment with Python 3.10+:
+
+    ```bash
+    python3.10 -m venv venv
+    ```
+
+* Activate the virtual environment
+
+    ```bash
+    source venv/bin/activate
+    ```
+
+* Install libraries
+Run the following command to install the libraries/packages.
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+## Model training from a main file
+
+To train the Logistic Model, only run the following code:
+
+```bash
+python itesm_mlops_project/itesm_mlops_project.py
+```
+
+Output:
+
+```bash
+test roc-auc : 0.8152286743603835
+test accuracy: 0.7748091603053435
+Model saved in ./models/logistic_regression_output.pkl
+```
+
+## Execution of unit tests (Pytest)
+
+### Test location
+
+You can find the test location in the [test](tests) folder, and the following tests:
+
+* Test `test_missing_indicator_transform`:  
+Test the `transform` method of the MissingIndicator transformer.
+
+* Test `test_missing_indicator_fit`:  
+Test the `fit` method of the MissingIndicator transformer.
+
+* Test `test_csv_file_existence`:  
+Test case to check if the CSV file exists.
+
+* Test `test_model_existence`:  
+Test to validate the existence of a `.pkl` model file.
