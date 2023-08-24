@@ -103,3 +103,75 @@ Test case to check if the CSV file exists.
 
 * Test `test_model_existence`:  
 Test to validate the existence of a `.pkl` model file.
+
+## Usage
+
+### Individual Fastapi and Use Deployment
+
+* Run the next command to start the Titanic API locally
+
+    ```bash
+    uvicorn itesm_mlops_project.api.main:app --reload
+    ```
+
+#### Checking endpoints
+
+1. Access `http://127.0.0.1:8000/`, you will see a message like this `"house predict price is all ready to go!"`
+2. Access `http://127.0.0.1:8000/docs`, the browser will display something like this:
+![FastAPI Docs](docs/imgs/fast-api-docs.png)
+3. Try running the following predictions with the endpoint by writing the following values:
+    * **Prediction 1**  
+        Request body
+
+        ```bash
+        {
+        "pclass_nan": 0,
+        "age_nan": 0,
+        "sibsp_nan": 0,
+        "parch_nan": 0,
+        "fare_nan": 0,
+        "sex_male": 1,
+        "cabin_Missing": 1,
+        "cabin_rare": 0,
+        "embarked_Q": 1,
+        "embarked_S": 0,
+        "title_Mr": 1,
+        "title_Mrs": 0,
+        "title_rar": 0
+        }
+        ```
+
+        Response body
+        The output will be:
+
+        ```bash
+        "Resultado predicción: [0]"
+        ```
+
+    * **Prediction 2**  
+        Request body
+
+        ```bash
+         {
+            "pclass_nan": 0,
+            "age_nan": 0,
+            "sibsp_nan": 1,
+            "parch_nan": 0,
+            "fare_nan": 0,
+            "sex_male": 0,
+            "cabin_Missing": 0,
+            "cabin_rare": 0,
+            "embarked_Q": 1,
+            "embarked_S": 0,
+            "title_Mr": 1,
+            "title_Mrs": 0,
+            "title_rar": 0
+        }
+        ```
+
+        Response body
+        The output will be:
+
+        ```bash
+        "Resultado predicción: [1]"
+        ```
