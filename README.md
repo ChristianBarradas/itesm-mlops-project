@@ -105,10 +105,12 @@ Test case to check if the CSV file exists.
 Test to validate the existence of a `.pkl` model file.
 
 ## Usage
-
 ### Individual Fastapi and Use Deployment
+FastAPI is a modern web API development framework for Python that combines high performance with a simple declarative syntax. Designed to make it easy to create fast and efficient APIs, FastAPI has quickly gained popularity in the development community due to its speed, ease of use, and automatic generation of interactive documentation.
 
-* Run the next command to start the Titanic API locally
+Uvicorn is a lightning-fast ASGI (Asynchronous Server Gateway Interface) server designed to run Python web applications asynchronously and efficiently. Being an ASGI implementation, Uvicorn takes advantage of the asynchronous nature of Python to handle multiple connections concurrently, enabling exceptionally high throughput and low latency in web applications.
+
+* Run the next command to start the house predict API locally
 
     ```bash
     uvicorn itesm_mlops_project.api.main:app --reload
@@ -124,21 +126,28 @@ Test to validate the existence of a `.pkl` model file.
         Request body
 
         ```bash
-        {
-        "pclass_nan": 0,
-        "age_nan": 0,
-        "sibsp_nan": 0,
-        "parch_nan": 0,
-        "fare_nan": 0,
-        "sex_male": 1,
-        "cabin_Missing": 1,
-        "cabin_rare": 0,
-        "embarked_Q": 1,
-        "embarked_S": 0,
-        "title_Mr": 1,
-        "title_Mrs": 0,
-        "title_rar": 0
-        }
+    {
+        "bedrooms": 1,
+        "bathrooms": 2,
+        "sqft_living": 0,
+        "sqft_lot": 0,
+        "floors": 0,
+        "waterfront": 0,
+        "view": 0,
+        "condition": 0,
+        "grade": 0,
+        "sqft_above": 0,
+        "sqft_basement": 0,
+        "yr_built": 0,
+        "yr_renovated": 0,
+        "lat": 0,
+        "long": 0,
+        "sqft_living15": 0,
+        "sqft_lot15": 0,
+        "month": 0,
+        "year": 0
+    }
+
         ```
 
         Response body
