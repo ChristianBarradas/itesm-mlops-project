@@ -39,13 +39,9 @@ In other words, knowledge is integrated regarding the learning of good software 
 
 ### Links to experiments like notebooks
 
-You can find the Titanic experiments here:
+You can find the predict house price experiments here:
 
-* [1-exploring-data.ipynb](docs/notebooks/1-exploring-data.ipynb)
-* [2-organizing-ideas.ipynb](docs/notebooks/2-organizing-ideas.ipynb)
-* [3-create-convenient-classes.ipynb](docs/notebooks/3-create-convenient-classes.ipynb)
-* [4_creating_pipeline.ipynb](docs/notebooks/4_creating_pipeline.ipynb)
-* [5_refactored_titanic_notebook.ipynb](docs/notebooks/5_refactored_titanic_notebook.ipynb)
+* [1-exploring-data.ipynb](docs/notebooks/predicting_house_prices_keras_ann.ipynb)
 
 ## Setup
 
@@ -72,20 +68,22 @@ Run the following command to install the libraries/packages.
     pip install -r requirements.txt
     ```
 
-## Model training from a main file
+## Model training from a house_price_prediction.py file
 
-To train the Logistic Model, only run the following code:
+To train the neural network model, only run the following code:
 
 ```bash
-python itesm_mlops_project/itesm_mlops_project.py
+python itesm_mlops_project/house_price_prediction.py
 ```
 
 Output:
 
 ```bash
-test roc-auc : 0.8152286743603835
-test accuracy: 0.7748091603053435
-Model saved in ./models/logistic_regression_output.pkl
+MAE:  105217.97457443322
+MSE:  28882225899.6316
+RMSE:  169947.7151939137
+Variance Regression Score:  0.7944141570971985
+Model saved in ./models/neural_network_model.pkl
 ```
 
 ## Execution of unit tests (Pytest)
