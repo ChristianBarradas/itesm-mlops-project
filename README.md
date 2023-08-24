@@ -371,6 +371,16 @@ Uvicorn is a lightning-fast ASGI (Asynchronous Server Gateway Interface) server 
     Successfully copied 1.85kB to .../itesm-mlops-project/.
     ```
 
+5. Copy logs in the local machine, using Volum, modify the dockerfile
+
+   ```bash
+   RUN mkdir /app/logs
+   ```
+
+6. run next command
+    ```bash
+    docker run -v /itesm-mlops-project/itesm-mlops-project/itesm_mlops_project/app/logs:/app/logs -d --name house-container -p 8000:8000 house-image
+    ```
 #### Delete container and image
 
 * Stop the container:

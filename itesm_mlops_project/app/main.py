@@ -8,11 +8,11 @@ from models.models import HousePricePrediction
 from custom_loggin import CustomLogger
 
 FILE_MODEL = 'ml_models/neural_network_model.pkl'
-FILE_LOG_DIR = 'main.log'
+FILE_LOG_DIR = 'logs/main.log'
 
 
 logger = CustomLogger(__name__, FILE_LOG_DIR).logger    
-logger.debug('start API')
+logger.debug('start API app')
 # Add the parent directory to sys.path
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.abspath(os.path.join(current_dir, ".."))
